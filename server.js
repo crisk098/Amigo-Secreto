@@ -71,6 +71,56 @@ let config = readJsonFile(CONFIG_FILE, defaultConfig);
 let drawHistory = readJsonFile(HISTORY_FILE, []);
 let activeDraw = readJsonFile(ACTIVE_DRAW_FILE, null); // guarda o último sorteio ativo para consulta dos participantes
 
+// Regra padrão: Ordenador alfabético universal (A-Z, insensível a maiúsculas e acentos)
+function sortParticipantsByName(list) {
+  return list.sort((a, b) => (a.name || '').localeCompare(b.name || '', 'pt-BR', { sensitivity: 'base' }));
+}
+
+// Migração e normalização de nomes (ex: Vó Zifa -> Vô Zifa) preservando dados do sorteio
+let needsParticipantSave = false;
+participants.forEach(p => {
+  if (p.name === 'Vó Zifa') {
+    p.name = 'Vô Zifa';
+    needsParticipantSave = true;
+  }
+});
+sortParticipantsByName(participants);
+if (needsParticipantSave) {
+  sortParticipantsByName(participants);
+  writeJsonFile(PARTICIPANTS_FILE, participants);
+}
+
+if (activeDraw && activeDraw.pairs) {
+  let needsDrawSave = false;
+  activeDraw.pairs.forEach(pair => {
+    if (pair.giverName === 'Vó Zifa') { pair.giverName = 'Vô Zifa'; needsDrawSave = true; }
+    if (pair.receiverName === 'Vó Zifa') { pair.receiverName = 'Vô Zifa'; needsDrawSave = true; }
+  });
+  if (needsDrawSave) {
+    writeJsonFile(ACTIVE_DRAW_FILE, activeDraw);
+  }
+}
+
+if (drawHistory && Array.isArray(drawHistory)) {
+  let needsHistorySave = false;
+  drawHistory.forEach(record => {
+    if (record.pairs) {
+      record.pairs.forEach(pair => {
+        if (pair.giverName === 'Vó Zifa') { pair.giverName = 'Vô Zifa'; needsHistorySave = true; }
+        if (pair.receiverName === 'Vó Zifa') { pair.receiverName = 'Vô Zifa'; needsHistorySave = true; }
+      });
+    }
+    if (record.resultsSummary) {
+      record.resultsSummary.forEach(r => {
+        if (r.name === 'Vó Zifa') { r.name = 'Vô Zifa'; needsHistorySave = true; }
+      });
+    }
+  });
+  if (needsHistorySave) {
+    writeJsonFile(HISTORY_FILE, drawHistory);
+  }
+}
+
 // Utilitário para embaralhar lista (Fisher-Yates)
 function shuffle(array) {
   const arr = [...array];
@@ -488,6 +538,7 @@ app.post('/api/participants', (req, res) => {
   };
 
   participants.push(newParticipant);
+  sortParticipantsByName(participants);
   writeJsonFile(PARTICIPANTS_FILE, participants);
 
   res.status(201).json({ success: true, participant: newParticipant });
@@ -532,6 +583,7 @@ app.post('/api/participants/bulk', (req, res) => {
     addedCount++;
   }
 
+  sortParticipantsByName(participants);
   writeJsonFile(PARTICIPANTS_FILE, participants);
 
   res.json({
@@ -582,6 +634,7 @@ app.post('/api/participants/claim', (req, res) => {
     participant.wishlist = wishlist.trim();
   }
 
+  sortParticipantsByName(participants);
   writeJsonFile(PARTICIPANTS_FILE, participants);
 
   // Se já houver um sorteio ativo realizado, dispara o e-mail automaticamente agora que ela cadastrou!
@@ -670,11 +723,13 @@ app.post('/api/participant/my-draw', (req, res) => {
   const receiverParticipant = participants.find(p => p.id === myPair.receiverId);
   const liveWishlist = receiverParticipant ? (receiverParticipant.wishlist || '') : (myPair.receiverWishlist || '');
 
+  const receiverName = receiverParticipant ? receiverParticipant.name : (myPair.receiverName === 'Vó Zifa' ? 'Vô Zifa' : myPair.receiverName);
+
   res.json({
     drawCompleted: true,
     giverName: participant.name,
     myWishlist: participant.wishlist || '',
-    receiverName: myPair.receiverName,
+    receiverName,
     receiverWishlist: liveWishlist,
     eventConfig: {
       eventName: config.eventName,
@@ -698,6 +753,7 @@ app.post('/api/participant/update-wishlist', (req, res) => {
   }
 
   participant.wishlist = (wishlist || '').trim();
+  sortParticipantsByName(participants);
   writeJsonFile(PARTICIPANTS_FILE, participants);
 
   // Se houver sorteio ativo, atualiza também no par correspondente
@@ -734,6 +790,7 @@ app.put('/api/participants/:id', (req, res) => {
   if (wishlist !== undefined) participants[index].wishlist = wishlist.trim();
   if (participantPin !== undefined) participants[index].pin = participantPin.trim();
 
+  sortParticipantsByName(participants);
   writeJsonFile(PARTICIPANTS_FILE, participants);
   res.json({ success: true, participant: participants[index] });
 });
@@ -746,6 +803,7 @@ app.delete('/api/participants/:id', (req, res) => {
   }
 
   participants = participants.filter(p => p.id !== req.params.id);
+  sortParticipantsByName(participants);
   writeJsonFile(PARTICIPANTS_FILE, participants);
   res.json({ success: true, message: 'Participante removido com sucesso.' });
 });
@@ -759,6 +817,7 @@ app.post('/api/participants/clear', (req, res) => {
 
   participants = [];
   activeDraw = null;
+  sortParticipantsByName(participants);
   writeJsonFile(PARTICIPANTS_FILE, participants);
   writeJsonFile(ACTIVE_DRAW_FILE, null);
   res.json({ success: true, message: 'Lista de participantes esvaziada.' });
@@ -782,6 +841,7 @@ app.post('/api/participants/sample', (req, res) => {
     { id: '8', name: 'João Solteiro', email: '', pin: '', family: '', wishlist: '', createdAt: new Date().toISOString() }
   ];
 
+  sortParticipantsByName(participants);
   writeJsonFile(PARTICIPANTS_FILE, participants);
   res.json({ success: true, count: participants.length, participants });
 });
@@ -987,9 +1047,30 @@ app.post('/api/draw/history', (req, res) => {
     return res.status(401).json({ error: 'PIN de organizador inválido.' });
   }
 
+  const sortedHistory = drawHistory.map(record => ({
+    ...record,
+    pairs: (record.pairs || []).map(p => ({
+      ...p,
+      giverName: p.giverName === 'Vó Zifa' ? 'Vô Zifa' : p.giverName,
+      receiverName: p.receiverName === 'Vó Zifa' ? 'Vô Zifa' : p.receiverName
+    })).sort((a, b) => (a.giverName || '').localeCompare(b.giverName || '', 'pt-BR', { sensitivity: 'base' }))
+  }));
+
+  let sanitizedActiveDraw = activeDraw;
+  if (activeDraw && activeDraw.pairs) {
+    sanitizedActiveDraw = {
+      ...activeDraw,
+      pairs: activeDraw.pairs.map(p => ({
+        ...p,
+        giverName: p.giverName === 'Vó Zifa' ? 'Vô Zifa' : p.giverName,
+        receiverName: p.receiverName === 'Vó Zifa' ? 'Vô Zifa' : p.receiverName
+      })).sort((a, b) => (a.giverName || '').localeCompare(b.giverName || '', 'pt-BR', { sensitivity: 'base' }))
+    };
+  }
+
   res.json({
-    history: drawHistory,
-    activeDraw
+    history: sortedHistory,
+    activeDraw: sanitizedActiveDraw
   });
 });
 
