@@ -448,6 +448,8 @@ app.get('/api/participants', (req, res) => {
     };
   });
 
+  sanitized.sort((a, b) => a.name.localeCompare(b.name, 'pt-BR', { sensitivity: 'base' }));
+
   const claimedCount = participants.filter(p => Boolean(p.claimed || (p.pin && String(p.pin).trim().length === 4) || (p.email && p.email.trim().includes('@')))).length;
 
   res.json({

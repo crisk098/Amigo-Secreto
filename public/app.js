@@ -138,6 +138,8 @@ async function loadParticipants() {
     const res = await fetch(`/api/participants${pinParam}`);
     const data = await res.json();
     participants = data.participants || [];
+    // Ordena os participantes em ordem alfabética (A-Z)
+    participants.sort((a, b) => (a.name || '').localeCompare(b.name || '', 'pt-BR', { sensitivity: 'base' }));
     renderParticipantsGrid();
     validateFamilyConstraints();
     if (isOrganizerLoggedIn) {
@@ -188,6 +190,8 @@ function renderParticipantsGrid() {
     }
     return true;
   });
+
+  filtered.sort((a, b) => (a.name || '').localeCompare(b.name || '', 'pt-BR', { sensitivity: 'base' }));
 
   if (filtered.length === 0) {
     grid.innerHTML = `
@@ -1065,7 +1069,10 @@ async function loadDrawHistory() {
       box.style.marginBottom = '20px';
 
       let rowsHtml = '';
-      (record.pairs || []).forEach((pair, pIdx) => {
+      const sortedPairs = [...(record.pairs || [])].sort((a, b) =>
+        (a.giverName || '').localeCompare(b.giverName || '', 'pt-BR', { sensitivity: 'base' })
+      );
+      sortedPairs.forEach((pair, pIdx) => {
         const secretId = `secret-${record.id}-${pIdx}`;
         rowsHtml += `
           <tr style="border-bottom: 1px solid #f1f5f9;">
