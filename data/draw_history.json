@@ -1,5 +1,309 @@
 [
   {
+    "id": "1794448786396",
+    "date": "2026-11-12T01:59:46.396Z",
+    "totalParticipants": 21,
+    "isSimulation": true,
+    "resultsSummary": [
+      {
+        "name": "Lita",
+        "email": "(Consulta via site)",
+        "status": "pronto_site",
+        "message": "Disponível no site com senha de 4 dígitos"
+      },
+      {
+        "name": "Vô Zifa",
+        "email": "(Consulta via site)",
+        "status": "pronto_site",
+        "message": "Disponível no site com senha de 4 dígitos"
+      },
+      {
+        "name": "Lucineia",
+        "email": "(Consulta via site)",
+        "status": "pronto_site",
+        "message": "Disponível no site com senha de 4 dígitos"
+      },
+      {
+        "name": "Fa",
+        "email": "flaviagtavares15@gmail.com",
+        "status": "pronto_site",
+        "message": "Disponível no site com senha de 4 dígitos"
+      },
+      {
+        "name": "Poli",
+        "email": "polianatavares012@gmail.com",
+        "status": "pronto_site",
+        "message": "Disponível no site com senha de 4 dígitos"
+      },
+      {
+        "name": "Marcos",
+        "email": "(Consulta via site)",
+        "status": "pronto_site",
+        "message": "Disponível no site com senha de 4 dígitos"
+      },
+      {
+        "name": "Denilza",
+        "email": "(Consulta via site)",
+        "status": "pronto_site",
+        "message": "Disponível no site com senha de 4 dígitos"
+      },
+      {
+        "name": "Maicosuel",
+        "email": "(Consulta via site)",
+        "status": "pronto_site",
+        "message": "Disponível no site com senha de 4 dígitos"
+      },
+      {
+        "name": "Ji",
+        "email": "(Consulta via site)",
+        "status": "pronto_site",
+        "message": "Disponível no site com senha de 4 dígitos"
+      },
+      {
+        "name": "Fabi",
+        "email": "fabianemuhl35@gmail.com",
+        "status": "pronto_site",
+        "message": "Disponível no site com senha de 4 dígitos"
+      },
+      {
+        "name": "Bruno",
+        "email": "(Consulta via site)",
+        "status": "pronto_site",
+        "message": "Disponível no site com senha de 4 dígitos"
+      },
+      {
+        "name": "Su",
+        "email": "(Consulta via site)",
+        "status": "pronto_site",
+        "message": "Disponível no site com senha de 4 dígitos"
+      },
+      {
+        "name": "Rafa",
+        "email": "pais@exemplo.com",
+        "status": "pronto_site",
+        "message": "Disponível no site com senha de 4 dígitos"
+      },
+      {
+        "name": "Noah",
+        "email": "pais@exemplo.com",
+        "status": "pronto_site",
+        "message": "Disponível no site com senha de 4 dígitos"
+      },
+      {
+        "name": "Pam",
+        "email": "(Consulta via site)",
+        "status": "pronto_site",
+        "message": "Disponível no site com senha de 4 dígitos"
+      },
+      {
+        "name": "Cris Lindão",
+        "email": "cristianokoantunes@gmail.com",
+        "status": "pronto_site",
+        "message": "Disponível no site com senha de 4 dígitos"
+      },
+      {
+        "name": "Julia",
+        "email": "cristianokantunes098@gmail.com",
+        "status": "pronto_site",
+        "message": "Disponível no site com senha de 4 dígitos"
+      },
+      {
+        "name": "Edilson",
+        "email": "(Consulta via site)",
+        "status": "pronto_site",
+        "message": "Disponível no site com senha de 4 dígitos"
+      },
+      {
+        "name": "Mara",
+        "email": "(Consulta via site)",
+        "status": "pronto_site",
+        "message": "Disponível no site com senha de 4 dígitos"
+      },
+      {
+        "name": "Angelica",
+        "email": "(Consulta via site)",
+        "status": "pronto_site",
+        "message": "Disponível no site com senha de 4 dígitos"
+      },
+      {
+        "name": "Anderson",
+        "email": "(Consulta via site)",
+        "status": "pronto_site",
+        "message": "Disponível no site com senha de 4 dígitos"
+      }
+    ],
+    "pairs": [
+      {
+        "giverId": "1794444817249izbd16",
+        "giverName": "Lita",
+        "giverEmail": "",
+        "receiverId": "1794444817249jj7t5",
+        "receiverName": "Ji",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794444817249lyem17",
+        "giverName": "Vô Zifa",
+        "giverEmail": "",
+        "receiverId": "1794444817249hbkd3",
+        "receiverName": "Edilson",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "179444481724912t418",
+        "giverName": "Lucineia",
+        "giverEmail": "",
+        "receiverId": "1794444817249xfon1",
+        "receiverName": "Denilza",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794444817249gtnf19",
+        "giverName": "Fa",
+        "giverEmail": "flaviagtavares15@gmail.com",
+        "receiverId": "17944448172490afx12",
+        "receiverName": "Anderson",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794444817249pyxl20",
+        "giverName": "Poli",
+        "giverEmail": "polianatavares012@gmail.com",
+        "receiverId": "1794444817249vltk8",
+        "receiverName": "Su",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794444817248yku70",
+        "giverName": "Marcos",
+        "giverEmail": "",
+        "receiverId": "1794444817249izbd16",
+        "receiverName": "Lita",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794444817249xfon1",
+        "giverName": "Denilza",
+        "giverEmail": "",
+        "receiverId": "1794444817249uj3y11",
+        "receiverName": "Angelica",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794444817249yc592",
+        "giverName": "Maicosuel",
+        "giverEmail": "",
+        "receiverId": "1794444817249lyem17",
+        "receiverName": "Vô Zifa",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794444817249jj7t5",
+        "giverName": "Ji",
+        "giverEmail": "",
+        "receiverId": "1794444817249pyxl20",
+        "receiverName": "Poli",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794444817249s5fb6",
+        "giverName": "Fabi",
+        "giverEmail": "fabianemuhl35@gmail.com",
+        "receiverId": "179444481724986hf15",
+        "receiverName": "Julia",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794444817249y7xh7",
+        "giverName": "Bruno",
+        "giverEmail": "",
+        "receiverId": "179444481724912t418",
+        "receiverName": "Lucineia",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794444817249vltk8",
+        "giverName": "Su",
+        "giverEmail": "",
+        "receiverId": "1794444817249yc592",
+        "receiverName": "Maicosuel",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794444817249wvz69",
+        "giverName": "Rafa",
+        "giverEmail": "pais@exemplo.com",
+        "receiverId": "1794444817249s5fb6",
+        "receiverName": "Fabi",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794444817249bauw10",
+        "giverName": "Noah",
+        "giverEmail": "pais@exemplo.com",
+        "receiverId": "1794444817249pxjs14",
+        "receiverName": "Cris Lindão",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794444817249soy913",
+        "giverName": "Pam",
+        "giverEmail": "",
+        "receiverId": "1794444817249k2ry4",
+        "receiverName": "Mara",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794444817249pxjs14",
+        "giverName": "Cris Lindão",
+        "giverEmail": "cristianokoantunes@gmail.com",
+        "receiverId": "1794444817249gtnf19",
+        "receiverName": "Fa",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "179444481724986hf15",
+        "giverName": "Julia",
+        "giverEmail": "cristianokantunes098@gmail.com",
+        "receiverId": "1794444817249y7xh7",
+        "receiverName": "Bruno",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794444817249hbkd3",
+        "giverName": "Edilson",
+        "giverEmail": "",
+        "receiverId": "1794444817249bauw10",
+        "receiverName": "Noah",
+        "receiverWishlist": "Brinquedo"
+      },
+      {
+        "giverId": "1794444817249k2ry4",
+        "giverName": "Mara",
+        "giverEmail": "",
+        "receiverId": "1794444817249wvz69",
+        "receiverName": "Rafa",
+        "receiverWishlist": "Jogo"
+      },
+      {
+        "giverId": "1794444817249uj3y11",
+        "giverName": "Angelica",
+        "giverEmail": "",
+        "receiverId": "1794444817248yku70",
+        "receiverName": "Marcos",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "17944448172490afx12",
+        "giverName": "Anderson",
+        "giverEmail": "",
+        "receiverId": "1794444817249soy913",
+        "receiverName": "Pam",
+        "receiverWishlist": ""
+      }
+    ]
+  },
+  {
     "id": "1794444289242",
     "date": "2026-11-12T00:44:49.242Z",
     "totalParticipants": 21,
