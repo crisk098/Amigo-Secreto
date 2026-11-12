@@ -5,10 +5,10 @@
   "eventDate": "",
   "eventLocation": "Casa da Vó Carmelita",
   "emailSettings": {
-    "provider": "gmail",
-    "user": "cristianokoantunes@gmail.com",
+    "provider": "web",
+    "user": "",
     "pass": "",
-    "fromName": "Cristiano K. Antunes",
+    "fromName": "Amigo Secreto 🎅",
     "customHost": "",
     "customPort": 587,
     "customSecure": false

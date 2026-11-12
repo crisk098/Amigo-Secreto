@@ -36,7 +36,9 @@ function getFamilyStyle(familyName) {
 
 function hasRegisteredEmail(p) {
   if (!p) return false;
+  if (p.hasPin === true) return true;
   if (p.claimed === true) return true;
+  if (p.pin && String(p.pin).trim().length === 4) return true;
   if (p.email && p.email.trim().includes('@')) return true;
   if (p.emailMasked && p.emailMasked.trim().includes('@')) return true;
   return false;
@@ -225,24 +227,23 @@ function renderParticipantsGrid() {
     if (!isClaimed) {
       statusHtml = `
         <div class="person-status">
-          <span class="status-badge-pending">🟡 Aguardando E-mail & Senha</span>
+          <span class="status-badge-pending">🟡 Aguardando Senha</span>
         </div>
       `;
       actionBtnHtml = `
         <button class="btn btn-secondary btn-block" onclick="openClaimModal('${p.id}')">
-          👉 Cadastrar Meu E-mail
+          👉 Criar Minha Senha (4 dígitos)
         </button>
       `;
     } else {
-      const emailDisplay = p.emailMasked || p.email || 'Cadastrado';
       statusHtml = `
         <div class="person-status">
-          <span class="status-badge-claimed">🟢 Confirmado (${escapeHtml(emailDisplay)})</span>
+          <span class="status-badge-claimed">🟢 Senha Criada</span>
         </div>
       `;
       actionBtnHtml = `
         <button class="btn btn-outline btn-block" onclick="openMyDrawModal('${p.id}')">
-          🔑 Ver meu Amigo / Minha Senha
+          🎁 Ver Meu Amigo Secreto
         </button>
       `;
     }
@@ -347,7 +348,10 @@ function openClaimModal(participantId) {
   document.getElementById('claimWishlist').value = p.wishlist || '';
 
   document.getElementById('claimModal').classList.add('active');
-  document.getElementById('claimEmail').focus();
+  setTimeout(() => {
+    const pinInput = document.getElementById('claimPin');
+    if (pinInput) pinInput.focus();
+  }, 100);
 }
 
 function closeClaimModal() {
@@ -367,8 +371,8 @@ async function handleClaimSubmit(e) {
   const pin = document.getElementById('claimPin').value.trim();
   const wishlist = document.getElementById('claimWishlist').value.trim();
 
-  if (!email || !email.includes('@')) {
-    alert('Por favor, informe um endereço de e-mail válido.');
+  if (email && (!email.includes('@') || !email.includes('.'))) {
+    alert('Por favor, informe um endereço de e-mail válido ou deixe o campo em branco.');
     return;
   }
 
@@ -395,14 +399,19 @@ async function handleClaimSubmit(e) {
       return;
     }
 
-    // Fecha o modal com segurança usando os dados salvos em pName
     closeClaimModal();
-
-    alert(`🎉 Perfeito, ${pName}!\n\nSeu e-mail (${email}) e sua senha de 4 dígitos foram cadastrados com sucesso!\n\nGuarde a sua senha para consultar seu amigo secreto quando o sorteio for realizado.`);
-    
     await loadParticipants();
+
+    if (config.drawCompleted) {
+      const verAgora = confirm(`🎉 Perfeito, ${pName}!\n\nSua senha (${pin}) foi salva com sucesso!\n\nO sorteio já foi realizado! Deseja ver quem você tirou agora mesmo?`);
+      if (verAgora) {
+        openMyDrawModal(pId);
+      }
+    } else {
+      alert(`🎉 Perfeito, ${pName}!\n\nSua senha (${pin}) foi salva com sucesso!\n\nQuando o sorteio for realizado, basta você clicar no seu nome e digitar essa senha para ver quem tirou!`);
+    }
   } catch (err) {
-    console.error('Erro no cadastro de e-mail:', err);
+    console.error('Erro no cadastro de senha:', err);
     alert('Erro ao confirmar cadastro. Verifique a conexão com o servidor.');
   }
 }
@@ -673,7 +682,7 @@ function handleProviderChange() {
     gmailAlert.style.display = 'flex';
     emailUserGroup.style.display = 'flex';
     emailPassGroup.style.display = 'flex';
-  } else if (provider === 'simulation') {
+  } else if (provider === 'web' || provider === 'simulation') {
     customFields.style.display = 'none';
     gmailAlert.style.display = 'none';
     emailUserGroup.style.display = 'none';
@@ -797,14 +806,14 @@ function updateDrawChecklist() {
 
   const claimedCount = participants.filter(hasRegisteredEmail).length;
   if (claimedCount === participants.length && participants.length > 0) {
-    claimedElem.innerHTML = `✅ <strong>Todos os ${claimedCount} participantes</strong> já cadastraram e-mail e senha!`;
+    claimedElem.innerHTML = `✅ <strong>Todos os ${claimedCount} participantes</strong> já criaram sua senha de 4 dígitos!`;
     claimedElem.style.color = '#16a34a';
   } else if (claimedCount > 0) {
-    claimedElem.innerHTML = `ℹ️ <strong>${claimedCount} de ${participants.length}</strong> cadastraram e-mail. Os demais participantes poderão consultar quem tiraram no site com a senha de 4 dígitos.`;
+    claimedElem.innerHTML = `ℹ️ <strong>${claimedCount} de ${participants.length}</strong> já criaram senha. Os demais podem criar a qualquer momento para ver quem tiraram.`;
     claimedElem.style.color = '#2563eb';
   } else {
-    claimedElem.innerHTML = `⚠️ <strong>Nenhum dos ${participants.length} participantes</strong> cadastrou e-mail ainda.`;
-    claimedElem.style.color = '#d97706';
+    claimedElem.innerHTML = `ℹ️ <strong>${participants.length} participantes</strong> na lista (podem criar senha antes ou após o sorteio).`;
+    claimedElem.style.color = '#64748b';
   }
 
   const isValidFamily = validateFamilyConstraints();
@@ -817,16 +826,19 @@ function updateDrawChecklist() {
     ok = false;
   }
 
-  const provider = document.getElementById('cfgProvider')?.value || config.provider;
-  if (provider === 'simulation') {
+  const provider = document.getElementById('cfgProvider')?.value || config.provider || 'web';
+  if (provider === 'web') {
+    emailElem.innerHTML = `🌐 <strong>Modo 100% Web:</strong> Sorteio instantâneo pelo site. Consulta via senha de 4 dígitos (sem e-mails).`;
+    emailElem.style.color = '#16a34a';
+  } else if (provider === 'simulation') {
     emailElem.innerHTML = `ℹ️ <strong>Modo Simulação ativado</strong> (não enviará e-mails reais).`;
     emailElem.style.color = '#2563eb';
   } else if (config.hasEmailConfigured) {
     emailElem.innerHTML = `✅ E-mail do remetente configurado.`;
     emailElem.style.color = '#16a34a';
   } else {
-    emailElem.innerHTML = `⚠️ E-mail do remetente ainda não preenchido (ou ative o Modo Simulação).`;
-    emailElem.style.color = '#d97706';
+    emailElem.innerHTML = `🌐 <strong>Modo Web ativo:</strong> Consulta diretamente pelo site com senha de 4 dígitos.`;
+    emailElem.style.color = '#16a34a';
   }
 
   const activeDrawBanner = document.getElementById('activeDrawBanner');
@@ -844,7 +856,7 @@ function updateDrawChecklist() {
   } else {
     if (activeDrawBanner) activeDrawBanner.style.display = 'none';
     if (cancelDrawBtn) cancelDrawBtn.style.display = 'none';
-    if (drawBtn) drawBtn.textContent = '🚀 Realizar Sorteio e Enviar E-mails!';
+    if (drawBtn) drawBtn.textContent = '🚀 Realizar Sorteio do Amigo Secreto!';
   }
 
   if (drawBtn) {
@@ -880,17 +892,14 @@ async function cancelActiveDraw() {
 
 // 16. Executar Sorteio
 async function handleExecuteDraw() {
-  const isDryRun = document.getElementById('dryRunCheckbox').checked;
   const unclaimedCount = participants.filter(p => !hasRegisteredEmail(p)).length;
 
   let warning = '';
   if (unclaimedCount > 0) {
-    warning = `\n\n⚠️ Atenção: ${unclaimedCount} participante(s) ainda não cadastraram e-mail. Eles não receberão e-mail, mas poderão consultar quem tiraram aqui no site digitando a senha de 4 dígitos.`;
+    warning = `\n\nℹ️ ${unclaimedCount} participante(s) ainda não criaram senha de 4 dígitos no site. Não tem problema: eles poderão criar a senha a qualquer momento para ver quem tiraram!`;
   }
 
-  const confirmMsg = isDryRun
-    ? 'Deseja iniciar a SIMULAÇÃO do sorteio? (Nenhum e-mail real será disparado)'
-    : `ATENÇÃO: Você está prestes a realizar o sorteio oficial e enviar os e-mails para todos os participantes!${warning}\n\nConfirmar sorteio agora?`;
+  const confirmMsg = `Deseja realizar o sorteio do Amigo Secreto agora?${warning}\n\nO sorteio será realizado instantaneamente e todos os participantes poderão consultar quem tiraram digitando a sua senha de 4 dígitos no site!`;
 
   if (!confirm(confirmMsg)) return;
 
@@ -900,10 +909,10 @@ async function handleExecuteDraw() {
   const resultsList = document.getElementById('drawResultsList');
 
   drawBtn.disabled = true;
-  drawBtn.textContent = '⏳ Realizando Sorteio & Enviando...';
+  drawBtn.textContent = '⏳ Realizando Sorteio...';
   progressBox.style.display = 'block';
   summaryAlert.style.display = 'none';
-  resultsList.innerHTML = '<div style="color: #64748b; padding: 10px;">Executando algoritmo e processando envio...</div>';
+  resultsList.innerHTML = '<div style="color: #64748b; padding: 10px;">Executando algoritmo e gerando pares secretos...</div>';
 
   try {
     const res = await fetch('/api/draw', {
@@ -911,7 +920,7 @@ async function handleExecuteDraw() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         pin: organizerPin,
-        dryRun: isDryRun
+        sendEmails: false
       })
     });
 
@@ -921,7 +930,7 @@ async function handleExecuteDraw() {
       summaryAlert.innerHTML = `❌ <strong>Erro no Sorteio:</strong> ${data.error}`;
       summaryAlert.style.display = 'flex';
       drawBtn.disabled = false;
-      drawBtn.textContent = '🚀 Realizar Sorteio e Enviar E-mails!';
+      drawBtn.textContent = '🚀 Realizar Sorteio do Amigo Secreto!';
       return;
     }
 
@@ -932,15 +941,15 @@ async function handleExecuteDraw() {
     resultsList.innerHTML = '';
     (data.results || []).forEach(r => {
       const item = document.createElement('div');
-      let isSuccess = r.status === 'enviado' || r.status === 'simulado';
-      let badgeText = isSuccess ? '✅ Entregue' : (r.status === 'pendente_email' ? '🟡 Consulta no Site' : `❌ ${r.error || 'Erro'}`);
-      let badgeClass = isSuccess ? 'success' : (r.status === 'pendente_email' ? 'warning' : 'error');
+      let isReady = r.status === 'pronto_site' || r.status === 'simulado' || r.status === 'enviado';
+      let badgeText = isReady ? '✅ Senha Ativa' : '🟡 Criar Senha no Site';
+      let badgeClass = isReady ? 'success' : 'warning';
 
-      item.className = `result-item ${isSuccess ? 'success' : (r.status === 'pendente_email' ? '' : 'error')}`;
+      item.className = `result-item ${isReady ? 'success' : ''}`;
       item.innerHTML = `
         <div>
           <strong>${escapeHtml(r.name)}</strong>
-          <span style="color: #64748b; font-size: 0.85rem; margin-left: 6px;">(${escapeHtml(r.email)})</span>
+          <span style="color: #64748b; font-size: 0.85rem; margin-left: 6px;">${escapeHtml(r.message || '')}</span>
         </div>
         <div class="result-badge ${badgeClass}">
           ${badgeText}
@@ -948,6 +957,10 @@ async function handleExecuteDraw() {
       `;
       resultsList.appendChild(item);
     });
+
+    await loadConfig();
+    await loadParticipants();
+    updateDrawChecklist();
 
   } catch (err) {
     summaryAlert.className = 'alert alert-error';

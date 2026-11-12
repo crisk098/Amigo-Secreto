@@ -368,8 +368,7 @@ app.get('/api/config', (req, res) => {
     eventDate: config.eventDate,
     eventLocation: config.eventLocation,
     publicBaseUrl: config.publicBaseUrl || '',
-    hasEmailConfigured: Boolean(config.emailSettings && config.emailSettings.user),
-    provider: config.emailSettings?.provider || 'gmail',
+    provider: config.emailSettings?.provider || 'web',
     fromName: config.emailSettings?.fromName || 'Amigo Secreto 🎅',
     drawCompleted: Boolean(activeDraw),
     activeDrawDate: activeDraw ? activeDraw.date : null,
@@ -428,11 +427,13 @@ app.get('/api/participants', (req, res) => {
   const isOrganizer = req.query.organizerPin === config.organizerPin;
 
   const sanitized = participants.map(p => {
-    const isClaimed = Boolean((p.email && p.email.trim().includes('@')) || p.claimed);
+    const hasPin = Boolean((p.pin && String(p.pin).trim().length === 4));
+    const isClaimed = Boolean(p.claimed || hasPin || (p.email && p.email.trim().includes('@')));
     if (isOrganizer) {
       return {
         ...p,
-        claimed: isClaimed
+        claimed: isClaimed,
+        hasPin
       };
     }
     return {
@@ -441,12 +442,13 @@ app.get('/api/participants', (req, res) => {
       family: p.family,
       wishlist: p.wishlist || '',
       claimed: isClaimed,
-      emailMasked: isClaimed ? maskEmail(p.email) : '',
+      hasPin,
+      emailMasked: (p.email && p.email.includes('@')) ? maskEmail(p.email) : '',
       createdAt: p.createdAt
     };
   });
 
-  const claimedCount = participants.filter(p => Boolean(p.email && p.email.trim().includes('@'))).length;
+  const claimedCount = participants.filter(p => Boolean(p.claimed || (p.pin && String(p.pin).trim().length === 4) || (p.email && p.email.trim().includes('@')))).length;
 
   res.json({
     participants: sanitized,
@@ -553,8 +555,8 @@ app.post('/api/participants/claim', (req, res) => {
   }
 
   const cleanEmail = (email || '').trim().toLowerCase();
-  if (!cleanEmail || !cleanEmail.includes('@') || !cleanEmail.includes('.')) {
-    return res.status(400).json({ error: 'Por favor, informe um endereço de e-mail válido.' });
+  if (cleanEmail && (!cleanEmail.includes('@') || !cleanEmail.includes('.'))) {
+    return res.status(400).json({ error: 'Por favor, informe um endereço de e-mail válido ou deixe em branco.' });
   }
 
   const cleanPin = (pin || '').trim();
@@ -563,15 +565,15 @@ app.post('/api/participants/claim', (req, res) => {
   }
 
   // Se já tinha senha cadastrada, exige confirmação da senha anterior para alterar
-  if (participant.pin && participant.email) {
-    if (currentPin !== participant.pin) {
+  if (participant.pin) {
+    if (currentPin && currentPin !== participant.pin) {
       return res.status(403).json({
-        error: 'Este nome já possui e-mail cadastrado. Para atualizar os dados, informe sua senha de 4 dígitos anterior.'
+        error: 'Senha anterior incorreta. Para alterar seus dados, informe sua senha de 4 dígitos anterior.'
       });
     }
   }
 
-  participant.email = cleanEmail;
+  participant.email = cleanEmail || participant.email || '';
   participant.pin = cleanPin;
   participant.claimed = true;
   if (wishlist !== undefined) {
@@ -816,14 +818,16 @@ app.post('/api/draw', async (req, res) => {
     return res.status(400).json({ error: err.message });
   }
 
-  const isSimulation = config.emailSettings.provider === 'simulation' || dryRun;
+  const provider = config.emailSettings?.provider || 'web';
+  const shouldSendEmail = (provider !== 'web' && provider !== 'simulation') && (req.body.sendEmails === true) && !dryRun;
+  const isSimulation = !shouldSendEmail;
   const results = [];
   let transporter = null;
 
-  if (!isSimulation) {
+  if (shouldSendEmail) {
     if (!config.emailSettings || !config.emailSettings.user || !config.emailSettings.pass) {
       return res.status(400).json({
-        error: 'Você selecionou envio real por e-mail, mas a senha de e-mail (Senha de App do Google) não foi preenchida na Aba 1 de Configurações. Preencha sua senha de 16 letras ou marque "Apenas simular sorteio" abaixo.'
+        error: 'Para disparar e-mails pela internet, preencha as configurações de e-mail na Aba 1 ou use o Modo Web.'
       });
     }
     try {
@@ -831,7 +835,7 @@ app.post('/api/draw', async (req, res) => {
       await transporter.verify();
     } catch (err) {
       return res.status(500).json({
-        error: `Não foi possível conectar ao servidor de e-mail: ${err.message}. Verifique sua Senha de App do Google na Aba 1 de Configurações.`
+        error: `Não foi possível conectar ao servidor de e-mail: ${err.message}.`
       });
     }
   }
@@ -839,24 +843,25 @@ app.post('/api/draw', async (req, res) => {
   for (const pair of pairs) {
     const giver = pair.giver;
     const receiver = pair.receiver;
+    const hasPin = Boolean(giver.pin && String(giver.pin).trim().length === 4);
 
-    // Se o participante ainda não cadastrou e-mail
-    if (!giver.email || !giver.email.includes('@')) {
+    if (!shouldSendEmail) {
       results.push({
         name: giver.name,
-        email: '(Sem e-mail cadastrado)',
-        status: 'pendente_email',
-        message: 'A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!'
+        email: giver.email || '(Consulta via site)',
+        status: hasPin ? 'pronto_site' : 'pendente_senha',
+        message: hasPin ? 'Senha de 4 dígitos ativa! Pronto para ver no site.' : 'Aguardando participante criar senha de 4 dígitos no site.'
       });
       continue;
     }
 
-    if (isSimulation) {
+    // Se deve enviar e-mail mas o participante não cadastrou e-mail
+    if (!giver.email || !giver.email.includes('@')) {
       results.push({
         name: giver.name,
-        email: giver.email,
-        status: 'simulado',
-        message: 'Modo simulação: e-mail não disparado na internet.'
+        email: '(Sem e-mail cadastrado)',
+        status: hasPin ? 'pronto_site' : 'pendente_senha',
+        message: 'A pessoa não cadastrou e-mail, mas poderá ver no site com a senha de 4 dígitos!'
       });
       continue;
     }
@@ -923,9 +928,9 @@ app.post('/api/draw', async (req, res) => {
 
   res.json({
     success: true,
-    message: isSimulation
-      ? `Sorteio simulado com sucesso para todos os ${participants.length} participantes!`
-      : `Sorteio concluído! ${successCount} e-mails enviados.${pendingCount > 0 ? ` (${pendingCount} participantes sem e-mail verão pelo site com a senha)` : ''}`,
+    message: shouldSendEmail
+      ? `Sorteio concluído! ${successCount} e-mails enviados.${pendingCount > 0 ? ` (${pendingCount} participantes sem e-mail verão pelo site com a senha)` : ''}`
+      : `Sorteio realizado com sucesso! Todos os ${participants.length} participantes já podem consultar seu amigo secreto no site digitando a senha de 4 dígitos!`,
     isSimulation,
     summary: {
       total: participants.length,

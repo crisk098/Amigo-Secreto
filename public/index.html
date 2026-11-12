@@ -50,11 +50,11 @@
       </div>
       <div class="stat-box">
         <div class="stat-value" id="statClaimedCount" style="color: #16a34a;">0</div>
-        <div class="stat-label">E-mails Confirmados</div>
+        <div class="stat-label">Senhas Criadas</div>
       </div>
       <div class="stat-box">
         <div class="stat-value" id="statUnclaimedCount" style="color: #d97706;">0</div>
-        <div class="stat-label">Aguardando E-mail</div>
+        <div class="stat-label">Aguardando Senha</div>
       </div>
       <div class="stat-box">
         <div class="stat-value" id="statFamilyCount">0</div>
@@ -73,8 +73,8 @@
       <input type="text" id="searchInput" class="search-input" placeholder="🔍 Digite seu nome para achar rápido..." oninput="handleSearch()">
       <div style="display: flex; gap: 8px; flex-wrap: wrap;">
         <button class="btn btn-primary btn-sm" id="filterAll" onclick="setFilter('all')">Todos</button>
-        <button class="btn btn-outline btn-sm" id="filterPending" onclick="setFilter('pending')">🟡 Aguardando E-mail</button>
-        <button class="btn btn-outline btn-sm" id="filterClaimed" onclick="setFilter('claimed')">🟢 Confirmados</button>
+        <button class="btn btn-outline btn-sm" id="filterPending" onclick="setFilter('pending')">🟡 Aguardando Senha</button>
+        <button class="btn btn-outline btn-sm" id="filterClaimed" onclick="setFilter('claimed')">🟢 Com Senha Criada</button>
       </div>
     </div>
 
@@ -156,7 +156,7 @@
       <!-- Navegação de Abas do Organizador -->
       <nav class="tabs-nav">
         <button class="tab-btn active" id="tabBtnSettings" onclick="switchOrganizerTab('tab-settings')">
-          ⚙️ 1. Configurar E-mail
+          ⚙️ 1. Configurações do Evento
         </button>
         <button class="tab-btn" id="tabBtnDraw" onclick="switchOrganizerTab('tab-draw')">
           🎲 2. Realizar Sorteio
@@ -169,8 +169,8 @@
       <!-- ABA DO ORGANIZADOR 1: CONFIGURAR E-MAIL E EVENTO -->
       <div id="tab-settings" class="tab-content active">
         <div class="card">
-          <h2 class="card-title">⚙️ Configurações do Evento & Envio de E-mails</h2>
-          <p class="card-subtitle">Configure por onde os e-mails serão disparados e personalize os detalhes da festa.</p>
+          <h2 class="card-title">⚙️ Configurações do Evento</h2>
+          <p class="card-subtitle">Personalize os detalhes da festa e escolha a forma de consulta dos amigos secretos.</p>
 
           <!-- Detalhes do Evento -->
           <h3 style="font-size: 1.1rem; color: var(--dark); margin: 20px 0 12px 0;">🎈 Detalhes do Evento</h3>
@@ -196,16 +196,16 @@
             </div>
           </div>
 
-          <!-- Provedor de E-mail -->
-          <h3 style="font-size: 1.1rem; color: var(--dark); margin: 25px 0 12px 0;">📫 Servidor de E-mail</h3>
+          <!-- Provedor de E-mail / Modo de Consulta -->
+          <h3 style="font-size: 1.1rem; color: var(--dark); margin: 25px 0 12px 0;">📫 Modo de Entrega do Sorteio</h3>
           <div class="form-grid">
             <div class="form-group">
-              <label for="cfgProvider">Provedor de Disparo</label>
+              <label for="cfgProvider">Modo de Consulta / Provedor</label>
               <select id="cfgProvider" onchange="handleProviderChange()">
-                <option value="gmail">Gmail (Recomendado - Usar Senha de App)</option>
-                <option value="outlook">Outlook / Hotmail</option>
-                <option value="custom">SMTP Personalizado (SendGrid, Mailtrap, Hostgator, etc.)</option>
-                <option value="simulation">Modo Simulação / Teste Local (Não envia e-mails de verdade)</option>
+                <option value="web" selected>🌐 Modo 100% Web (Sem envio de e-mails - Consulta pelo site)</option>
+                <option value="gmail">Gmail (Opcional - Usar Senha de App de 16 letras)</option>
+                <option value="outlook">Outlook / Hotmail (Opcional)</option>
+                <option value="custom">SMTP Personalizado (SendGrid, Brevo, etc.)</option>
               </select>
             </div>
 
@@ -307,9 +307,9 @@
           <div style="max-width: 550px; margin: 0 auto 25px auto; text-align: left; background: #f8fafc; border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 20px;">
             <div style="font-weight: 700; margin-bottom: 12px; color: var(--dark);">Checklist de Segurança:</div>
             <div id="checkCount" style="margin-bottom: 8px;">⏳ Verificando participantes...</div>
-            <div id="checkClaimed" style="margin-bottom: 8px;">⏳ Verificando e-mails cadastrados...</div>
+            <div id="checkClaimed" style="margin-bottom: 8px;">⏳ Verificando senhas criadas...</div>
             <div id="checkFamily" style="margin-bottom: 8px;">⏳ Verificando restrições de família...</div>
-            <div id="checkEmail">⏳ Verificando configuração de e-mail...</div>
+            <div id="checkEmail">⏳ Verificando modo de entrega...</div>
           </div>
 
           <!-- Banner de Sorteio Ativo -->
@@ -319,21 +319,14 @@
               <strong>Já existe um sorteio ativo!</strong><br>
               <span id="activeDrawDateText"></span><br>
               <small style="color: #166534; display: block; margin-top: 4px;">
-                Os participantes que digitarem a senha de 4 dígitos no site já conseguem ver o amigo secreto. Se quiser mudar as pessoas ou refazer, você pode sortear novamente ou cancelar abaixo.
+                Os participantes que digitarem a senha de 4 dígitos no site já conseguem ver quem tiraram. Você pode sortear novamente ou cancelar abaixo a qualquer momento.
               </small>
             </div>
           </div>
 
-          <div style="margin-bottom: 25px;">
-            <label style="cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: var(--gray-700);">
-              <input type="checkbox" id="dryRunCheckbox" style="width: 18px; height: 18px;">
-              Apenas simular sorteio (não disparar e-mails pela internet)
-            </label>
-          </div>
-
           <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
             <button class="btn btn-secondary btn-lg" id="drawBtn" onclick="handleExecuteDraw()">
-              🚀 Realizar Sorteio e Enviar E-mails!
+              🚀 Realizar Sorteio do Amigo Secreto!
             </button>
             <button class="btn btn-danger btn-lg" id="cancelDrawBtn" onclick="cancelActiveDraw()" style="display: none;">
               ❌ Cancelar / Anular Sorteio Atual
@@ -388,7 +381,7 @@
 
   <!-- ======================== MODAIS ======================== -->
 
-  <!-- MODAL 1: PARTICIPANTE CADASTRAR E-MAIL E SENHA DE 4 DÍGITOS -->
+  <!-- MODAL 1: PARTICIPANTE CADASTRAR SENHA DE 4 DÍGITOS -->
   <div id="claimModal" class="modal-overlay">
     <div class="modal-content" style="max-width: 500px;">
       <button class="modal-close" onclick="closeClaimModal()">✕</button>
@@ -400,36 +393,39 @@
       </div>
 
       <p style="font-size: 0.95rem; color: var(--gray-700); text-align: center; margin-bottom: 22px;">
-        Preencha seu e-mail para receber o resultado do sorteio e crie uma senha simples de 4 dígitos para consultar seu amigo secreto!
+        Crie uma senha simples de 4 dígitos para proteger seu acesso e ver seu amigo secreto diretamente pelo site!
       </p>
 
       <form id="claimForm" onsubmit="event.preventDefault(); handleClaimSubmit(event);">
         <input type="hidden" id="claimParticipantId">
 
         <div class="form-group" style="margin-bottom: 16px;">
-          <label for="claimEmail">Seu E-mail *</label>
-          <input type="email" id="claimEmail" placeholder="seu-email@gmail.com" required>
+          <label for="claimPin">
+            Crie sua Senha Secreta de 4 Dígitos *
+            <span class="optional">(Apenas 4 números, ex: 1234)</span>
+          </label>
+          <input type="password" id="claimPin" class="pin-input" maxlength="4" pattern="\d{4}" placeholder="••••" required autofocus>
         </div>
 
         <div class="form-group" style="margin-bottom: 16px;">
-          <label for="claimPin">
-            Crie uma Senha Simples de 4 Dígitos *
-            <span class="optional">(Apenas 4 números, ex: 1234)</span>
+          <label for="claimWishlist">
+            O que você gostaria de ganhar? 
+            <span class="optional">(Sugestão de presente - Opcional)</span>
           </label>
-          <input type="password" id="claimPin" class="pin-input" maxlength="4" pattern="\d{4}" placeholder="••••" required>
+          <input type="text" id="claimWishlist" placeholder="Ex: Livro, camisa M, chocolate, meias...">
         </div>
 
         <div class="form-group" style="margin-bottom: 22px;">
-          <label for="claimWishlist">
-            Sugestão de Presente ou Observações 
-            <span class="optional">(Opcional)</span>
+          <label for="claimEmail">
+            Seu E-mail 
+            <span class="optional">(Opcional - Pode deixar em branco)</span>
           </label>
-          <input type="text" id="claimWishlist" placeholder="Ex: Livro, camisa M, fone, chocolates...">
+          <input type="email" id="claimEmail" placeholder="Deixe em branco ou preencha se quiser">
         </div>
 
         <div style="display: flex; gap: 10px; justify-content: flex-end;">
           <button type="button" class="btn btn-outline" onclick="closeClaimModal()">Cancelar</button>
-          <button type="submit" class="btn btn-secondary">Confirmar Meu Cadastro ✅</button>
+          <button type="submit" class="btn btn-secondary">Salvar Minha Senha ✅</button>
         </div>
       </form>
     </div>
