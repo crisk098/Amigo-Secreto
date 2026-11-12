@@ -1,0 +1,17 @@
+{
+  "eventName": "Amigo Secreto da Família & Amigos",
+  "organizerPin": "9717",
+  "suggestedBudget": "100",
+  "eventDate": "",
+  "eventLocation": "Casa da Vó Carmelita",
+  "emailSettings": {
+    "provider": "gmail",
+    "user": "cristianokoantunes@gmail.com",
+    "pass": "",
+    "fromName": "Cristiano K. Antunes",
+    "customHost": "",
+    "customPort": 587,
+    "customSecure": false
+  },
+  "publicBaseUrl": ""
+}

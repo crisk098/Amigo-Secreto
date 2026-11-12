@@ -1,0 +1,610 @@
+[
+  {
+    "id": "1794444289242",
+    "date": "2026-11-12T00:44:49.242Z",
+    "totalParticipants": 21,
+    "isSimulation": false,
+    "resultsSummary": [
+      {
+        "name": "Lita",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Vó Zifa",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Lucineia",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Fa",
+        "email": "flaviagtavares15@gmail.com",
+        "status": "enviado",
+        "message": "E-mail entregue com sucesso"
+      },
+      {
+        "name": "Poli",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Marcos",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Denilza",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Maicosuel",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Ji",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Fabi",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Bruno",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Su",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Rafa",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Noah",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Pam",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Cris Lindão",
+        "email": "cristianokoantunes@gmail.com",
+        "status": "enviado",
+        "message": "E-mail entregue com sucesso"
+      },
+      {
+        "name": "Julia",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Edilson",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Mara",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Angelica",
+        "email": "angelicafreitastavares9@gmail.com",
+        "status": "enviado",
+        "message": "E-mail entregue com sucesso"
+      },
+      {
+        "name": "Anderson",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      }
+    ],
+    "pairs": [
+      {
+        "giverId": "1794443320996pk4t16",
+        "giverName": "Lita",
+        "giverEmail": "",
+        "receiverId": "1794443320996nxcl8",
+        "receiverName": "Su",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996s1vb17",
+        "giverName": "Vó Zifa",
+        "giverEmail": "",
+        "receiverId": "1794443320996ubjt2",
+        "receiverName": "Maicosuel",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996c0y618",
+        "giverName": "Lucineia",
+        "giverEmail": "",
+        "receiverId": "1794443320996xq4213",
+        "receiverName": "Pam",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996v0mq19",
+        "giverName": "Fa",
+        "giverEmail": "flaviagtavares15@gmail.com",
+        "receiverId": "1794443320996bmkj0",
+        "receiverName": "Marcos",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996npf620",
+        "giverName": "Poli",
+        "giverEmail": "",
+        "receiverId": "1794443320996n0rm15",
+        "receiverName": "Julia",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996bmkj0",
+        "giverName": "Marcos",
+        "giverEmail": "",
+        "receiverId": "179444332099645ij3",
+        "receiverName": "Edilson",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996c7bt1",
+        "giverName": "Denilza",
+        "giverEmail": "",
+        "receiverId": "1794443320996entk7",
+        "receiverName": "Bruno",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996ubjt2",
+        "giverName": "Maicosuel",
+        "giverEmail": "",
+        "receiverId": "17944433209960zdg4",
+        "receiverName": "Mara",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996kmq15",
+        "giverName": "Ji",
+        "giverEmail": "",
+        "receiverId": "1794443320996s1vb17",
+        "receiverName": "Vó Zifa",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996sauk6",
+        "giverName": "Fabi",
+        "giverEmail": "",
+        "receiverId": "1794443320996pk4t16",
+        "receiverName": "Lita",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996entk7",
+        "giverName": "Bruno",
+        "giverEmail": "",
+        "receiverId": "1794443320996v0mq19",
+        "receiverName": "Fa",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996nxcl8",
+        "giverName": "Su",
+        "giverEmail": "",
+        "receiverId": "1794443320996e44c11",
+        "receiverName": "Angelica",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996sbcf9",
+        "giverName": "Rafa",
+        "giverEmail": "",
+        "receiverId": "1794443320996kmq15",
+        "receiverName": "Ji",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "17944433209962w6f10",
+        "giverName": "Noah",
+        "giverEmail": "",
+        "receiverId": "1794443320996c0y618",
+        "receiverName": "Lucineia",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996xq4213",
+        "giverName": "Pam",
+        "giverEmail": "",
+        "receiverId": "1794443320996c7bt1",
+        "receiverName": "Denilza",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "179444332099648y014",
+        "giverName": "Cris Lindão",
+        "giverEmail": "cristianokoantunes@gmail.com",
+        "receiverId": "1794443320996npf620",
+        "receiverName": "Poli",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996n0rm15",
+        "giverName": "Julia",
+        "giverEmail": "",
+        "receiverId": "1794443320996sauk6",
+        "receiverName": "Fabi",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "179444332099645ij3",
+        "giverName": "Edilson",
+        "giverEmail": "",
+        "receiverId": "17944433209969raf12",
+        "receiverName": "Anderson",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "17944433209960zdg4",
+        "giverName": "Mara",
+        "giverEmail": "",
+        "receiverId": "179444332099648y014",
+        "receiverName": "Cris Lindão",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996e44c11",
+        "giverName": "Angelica",
+        "giverEmail": "angelicafreitastavares9@gmail.com",
+        "receiverId": "1794443320996sbcf9",
+        "receiverName": "Rafa",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "17944433209969raf12",
+        "giverName": "Anderson",
+        "giverEmail": "",
+        "receiverId": "17944433209962w6f10",
+        "receiverName": "Noah",
+        "receiverWishlist": ""
+      }
+    ]
+  },
+  {
+    "id": "1794444217307",
+    "date": "2026-11-12T00:43:37.307Z",
+    "totalParticipants": 21,
+    "isSimulation": true,
+    "resultsSummary": [
+      {
+        "name": "Lita",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Vó Zifa",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Lucineia",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Fa",
+        "email": "flaviagtavares15@gmail.com",
+        "status": "simulado",
+        "message": "Modo simulação: e-mail não disparado na internet."
+      },
+      {
+        "name": "Poli",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Marcos",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Denilza",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Maicosuel",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Ji",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Fabi",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Bruno",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Su",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Rafa",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Noah",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Pam",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Cris Lindão",
+        "email": "cristianokoantunes@gmail.com",
+        "status": "simulado",
+        "message": "Modo simulação: e-mail não disparado na internet."
+      },
+      {
+        "name": "Julia",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Edilson",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Mara",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      },
+      {
+        "name": "Angelica",
+        "email": "angelicafreitastavares9@gmail.com",
+        "status": "simulado",
+        "message": "Modo simulação: e-mail não disparado na internet."
+      },
+      {
+        "name": "Anderson",
+        "email": "(Sem e-mail cadastrado)",
+        "status": "pendente_email",
+        "message": "A pessoa não cadastrou e-mail, mas poderá ver no site digitando a senha de 4 dígitos!"
+      }
+    ],
+    "pairs": [
+      {
+        "giverId": "1794443320996pk4t16",
+        "giverName": "Lita",
+        "giverEmail": "",
+        "receiverId": "1794443320996n0rm15",
+        "receiverName": "Julia",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996s1vb17",
+        "giverName": "Vó Zifa",
+        "giverEmail": "",
+        "receiverId": "1794443320996bmkj0",
+        "receiverName": "Marcos",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996c0y618",
+        "giverName": "Lucineia",
+        "giverEmail": "",
+        "receiverId": "17944433209969raf12",
+        "receiverName": "Anderson",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996v0mq19",
+        "giverName": "Fa",
+        "giverEmail": "flaviagtavares15@gmail.com",
+        "receiverId": "1794443320996entk7",
+        "receiverName": "Bruno",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996npf620",
+        "giverName": "Poli",
+        "giverEmail": "",
+        "receiverId": "1794443320996c7bt1",
+        "receiverName": "Denilza",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996bmkj0",
+        "giverName": "Marcos",
+        "giverEmail": "",
+        "receiverId": "1794443320996e44c11",
+        "receiverName": "Angelica",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996c7bt1",
+        "giverName": "Denilza",
+        "giverEmail": "",
+        "receiverId": "1794443320996kmq15",
+        "receiverName": "Ji",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996ubjt2",
+        "giverName": "Maicosuel",
+        "giverEmail": "",
+        "receiverId": "1794443320996pk4t16",
+        "receiverName": "Lita",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996kmq15",
+        "giverName": "Ji",
+        "giverEmail": "",
+        "receiverId": "1794443320996ubjt2",
+        "receiverName": "Maicosuel",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996sauk6",
+        "giverName": "Fabi",
+        "giverEmail": "",
+        "receiverId": "17944433209960zdg4",
+        "receiverName": "Mara",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996entk7",
+        "giverName": "Bruno",
+        "giverEmail": "",
+        "receiverId": "1794443320996v0mq19",
+        "receiverName": "Fa",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996nxcl8",
+        "giverName": "Su",
+        "giverEmail": "",
+        "receiverId": "1794443320996s1vb17",
+        "receiverName": "Vó Zifa",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996sbcf9",
+        "giverName": "Rafa",
+        "giverEmail": "",
+        "receiverId": "1794443320996npf620",
+        "receiverName": "Poli",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "17944433209962w6f10",
+        "giverName": "Noah",
+        "giverEmail": "",
+        "receiverId": "1794443320996c0y618",
+        "receiverName": "Lucineia",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996xq4213",
+        "giverName": "Pam",
+        "giverEmail": "",
+        "receiverId": "179444332099645ij3",
+        "receiverName": "Edilson",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "179444332099648y014",
+        "giverName": "Cris Lindão",
+        "giverEmail": "cristianokoantunes@gmail.com",
+        "receiverId": "17944433209962w6f10",
+        "receiverName": "Noah",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996n0rm15",
+        "giverName": "Julia",
+        "giverEmail": "",
+        "receiverId": "1794443320996nxcl8",
+        "receiverName": "Su",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "179444332099645ij3",
+        "giverName": "Edilson",
+        "giverEmail": "",
+        "receiverId": "1794443320996xq4213",
+        "receiverName": "Pam",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "17944433209960zdg4",
+        "giverName": "Mara",
+        "giverEmail": "",
+        "receiverId": "1794443320996sbcf9",
+        "receiverName": "Rafa",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "1794443320996e44c11",
+        "giverName": "Angelica",
+        "giverEmail": "angelicafreitastavares9@gmail.com",
+        "receiverId": "179444332099648y014",
+        "receiverName": "Cris Lindão",
+        "receiverWishlist": ""
+      },
+      {
+        "giverId": "17944433209969raf12",
+        "giverName": "Anderson",
+        "giverEmail": "",
+        "receiverId": "1794443320996sauk6",
+        "receiverName": "Fabi",
+        "receiverWishlist": ""
+      }
+    ]
+  }
+]
