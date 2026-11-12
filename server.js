@@ -471,12 +471,6 @@ app.post('/api/participants', (req, res) => {
   }
 
   const cleanEmail = (email || '').trim().toLowerCase();
-  if (cleanEmail) {
-    const emailExists = participants.some(p => p.email && p.email.toLowerCase() === cleanEmail);
-    if (emailExists) {
-      return res.status(400).json({ error: 'Já existe um participante cadastrado com este e-mail.' });
-    }
-  }
 
   const newParticipant = {
     id: Date.now().toString() + Math.random().toString(36).substring(2, 6),
@@ -565,12 +559,6 @@ app.post('/api/participants/claim', (req, res) => {
   const cleanPin = (pin || '').trim();
   if (!/^\d{4}$/.test(cleanPin)) {
     return res.status(400).json({ error: 'A senha deve conter exatamente 4 dígitos numéricos (ex: 1234).' });
-  }
-
-  // Verifica se o e-mail já foi usado por OUTRA pessoa
-  const emailInUse = participants.some(p => p.id !== id && p.email && p.email.toLowerCase() === cleanEmail);
-  if (emailInUse) {
-    return res.status(400).json({ error: 'Este e-mail já foi cadastrado para outro participante.' });
   }
 
   // Se já tinha senha cadastrada, exige confirmação da senha anterior para alterar
@@ -840,7 +828,7 @@ app.post('/api/draw', async (req, res) => {
       await transporter.sendMail({
         from: `"${config.emailSettings.fromName || 'Amigo Secreto'}" <${config.emailSettings.user}>`,
         to: giver.email,
-        subject: `🎅 Seu Amigo Secreto: ${config.eventName}`,
+        subject: `🎅 [${giver.name}] Seu Amigo Secreto: ${config.eventName}`,
         html: htmlContent
       });
 

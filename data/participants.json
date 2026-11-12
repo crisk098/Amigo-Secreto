@@ -84,20 +84,22 @@
   {
     "id": "1794444817249wvz69",
     "name": "Rafa",
-    "email": "",
-    "pin": "",
+    "email": "pais@exemplo.com",
+    "pin": "5678",
     "family": "Família 4",
-    "wishlist": "",
-    "createdAt": "2026-11-12T00:53:37.249Z"
+    "wishlist": "Jogo",
+    "createdAt": "2026-11-12T00:53:37.249Z",
+    "claimed": true
   },
   {
     "id": "1794444817249bauw10",
     "name": "Noah",
-    "email": "",
-    "pin": "",
+    "email": "pais@exemplo.com",
+    "pin": "1234",
     "family": "Família 4",
-    "wishlist": "",
-    "createdAt": "2026-11-12T00:53:37.249Z"
+    "wishlist": "Brinquedo",
+    "createdAt": "2026-11-12T00:53:37.249Z",
+    "claimed": true
   },
   {
     "id": "1794444817249uj3y11",
@@ -186,10 +188,11 @@
   {
     "id": "1794444817249pyxl20",
     "name": "Poli",
-    "email": "",
-    "pin": "",
+    "email": "polianatavares012@gmail.com",
+    "pin": "1759",
     "family": "Família 7",
     "wishlist": "",
-    "createdAt": "2026-11-12T00:53:37.249Z"
+    "createdAt": "2026-11-12T00:53:37.249Z",
+    "claimed": true
   }
 ]
