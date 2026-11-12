@@ -9,6 +9,6 @@ git push -u origin main
 echo.
 echo ===================================================
 echo ✅ Concluido! Verifique seu repositorio no GitHub:
-echo https://github.com/Gathin23/Amigo-Secreto
+echo https://github.com/crisk098/Amigo-Secreto
 echo ===================================================
 pause
