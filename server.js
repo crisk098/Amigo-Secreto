@@ -664,17 +664,53 @@ app.post('/api/participant/my-draw', (req, res) => {
     return res.status(404).json({ error: 'Seu sorteio não foi localizado. Fale com o organizador.' });
   }
 
+  // Busca a lista de desejos atualizada do recebedor em tempo real
+  const receiverParticipant = participants.find(p => p.id === myPair.receiverId);
+  const liveWishlist = receiverParticipant ? (receiverParticipant.wishlist || '') : (myPair.receiverWishlist || '');
+
   res.json({
     drawCompleted: true,
     giverName: participant.name,
+    myWishlist: participant.wishlist || '',
     receiverName: myPair.receiverName,
-    receiverWishlist: myPair.receiverWishlist || '',
+    receiverWishlist: liveWishlist,
     eventConfig: {
       eventName: config.eventName,
       suggestedBudget: config.suggestedBudget,
       eventDate: config.eventDate,
       eventLocation: config.eventLocation
     }
+  });
+});
+
+// 8.1 PARTICIPANTE: Atualizar sua sugestão de presente
+app.post('/api/participant/update-wishlist', (req, res) => {
+  const { id, pin, wishlist } = req.body;
+  if (!id) return res.status(400).json({ error: 'Participante não identificado.' });
+
+  const participant = participants.find(p => p.id === id);
+  if (!participant) return res.status(404).json({ error: 'Participante não encontrado.' });
+
+  if (participant.pin && participant.pin !== (pin || '').trim()) {
+    return res.status(401).json({ error: 'Senha de 4 dígitos incorreta.' });
+  }
+
+  participant.wishlist = (wishlist || '').trim();
+  writeJsonFile(PARTICIPANTS_FILE, participants);
+
+  // Se houver sorteio ativo, atualiza também no par correspondente
+  if (activeDraw && activeDraw.pairs) {
+    const pairAsReceiver = activeDraw.pairs.find(p => p.receiverId === participant.id);
+    if (pairAsReceiver) {
+      pairAsReceiver.receiverWishlist = participant.wishlist;
+      writeJsonFile(ACTIVE_DRAW_FILE, activeDraw);
+    }
+  }
+
+  res.json({
+    success: true,
+    message: 'Sugestão de presente atualizada com sucesso!',
+    wishlist: participant.wishlist
   });
 });
 

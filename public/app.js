@@ -243,7 +243,7 @@ function renderParticipantsGrid() {
       `;
       actionBtnHtml = `
         <button class="btn btn-outline btn-block" onclick="openMyDrawModal('${p.id}')">
-          🎁 Ver Meu Amigo Secreto
+          🎁 Ver Meu Amigo / Dica de Presente
         </button>
       `;
     }
@@ -416,12 +416,15 @@ async function handleClaimSubmit(e) {
   }
 }
 
+let activeLoginPin = null;
+
 // 7. MODAL: Participante Ver Amigo Secreto (Login com Senha de 4 Dígitos)
 function openMyDrawModal(participantId) {
   const p = participants.find(item => item.id === participantId);
   if (!p) return;
 
   activeParticipantForLogin = p;
+  activeLoginPin = null;
 
   document.getElementById('myDrawParticipantName').textContent = `Olá, ${p.name}!`;
   document.getElementById('myDrawPinInput').value = '';
@@ -438,6 +441,7 @@ function openMyDrawModal(participantId) {
 function closeMyDrawModal() {
   document.getElementById('myDrawModal').classList.remove('active');
   activeParticipantForLogin = null;
+  activeLoginPin = null;
 }
 
 async function submitMyDrawLogin() {
@@ -469,6 +473,7 @@ async function submitMyDrawLogin() {
       return;
     }
 
+    activeLoginPin = pin;
     errorMsg.style.display = 'none';
     document.getElementById('myDrawLoginForm').style.display = 'none';
 
@@ -484,6 +489,14 @@ async function submitMyDrawLogin() {
         wishlistBox.style.display = 'none';
       }
 
+      // Minha própria sugestão de presente para quem me tirou
+      const myWishlistInput = document.getElementById('myDrawMyWishlistInput');
+      if (myWishlistInput) {
+        myWishlistInput.value = data.myWishlist || activeParticipantForLogin.wishlist || '';
+      }
+      const feedback = document.getElementById('myWishlistFeedback');
+      if (feedback) feedback.style.display = 'none';
+
       const eventInfoBox = document.getElementById('myDrawEventInfoBox');
       const ev = data.eventConfig || {};
       eventInfoBox.innerHTML = `
@@ -496,14 +509,61 @@ async function submitMyDrawLogin() {
       document.getElementById('myDrawResultBox').style.display = 'block';
 
     } else {
-      document.getElementById('myDrawSavedEmail').textContent = data.participant.email || 'Não informado';
-      document.getElementById('myDrawSavedWishlist').textContent = data.participant.wishlist || 'Nenhuma dica cadastrada';
+      const pendingInput = document.getElementById('myDrawPendingWishlistInput');
+      if (pendingInput) {
+        pendingInput.value = data.participant?.wishlist || activeParticipantForLogin.wishlist || '';
+      }
+      const feedbackPending = document.getElementById('myWishlistPendingFeedback');
+      if (feedbackPending) feedbackPending.style.display = 'none';
+
       document.getElementById('myDrawPendingBox').style.display = 'block';
     }
 
   } catch (err) {
     errorMsg.textContent = 'Erro ao consultar amigo secreto.';
     errorMsg.style.display = 'block';
+  }
+}
+
+// Salvar / atualizar a sugestão de presente do participante
+async function saveMyWishlist(isPending = false) {
+  if (!activeParticipantForLogin || !activeLoginPin) return;
+
+  const inputId = isPending ? 'myDrawPendingWishlistInput' : 'myDrawMyWishlistInput';
+  const feedbackId = isPending ? 'myWishlistPendingFeedback' : 'myWishlistFeedback';
+
+  const input = document.getElementById(inputId);
+  const feedback = document.getElementById(feedbackId);
+  const newWishlist = (input ? input.value : '').trim();
+
+  try {
+    const res = await fetch('/api/participant/update-wishlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: activeParticipantForLogin.id,
+        pin: activeLoginPin,
+        wishlist: newWishlist
+      })
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      alert(`Erro: ${data.error}`);
+      return;
+    }
+
+    activeParticipantForLogin.wishlist = newWishlist;
+
+    if (feedback) {
+      feedback.textContent = '✅ Sugestão de presente salva com sucesso!';
+      feedback.style.display = 'block';
+      setTimeout(() => { feedback.style.display = 'none'; }, 3500);
+    }
+
+    await loadParticipants();
+  } catch (err) {
+    alert('Erro ao salvar sugestão de presente.');
   }
 }
 
