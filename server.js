@@ -579,9 +579,41 @@ app.post('/api/participants/claim', (req, res) => {
 
   writeJsonFile(PARTICIPANTS_FILE, participants);
 
+  // Se já houver um sorteio ativo realizado, dispara o e-mail automaticamente agora que ela cadastrou!
+  let emailDispatched = false;
+  if (activeDraw && activeDraw.pairs && config.emailSettings && config.emailSettings.user && config.emailSettings.provider !== 'simulation') {
+    const myPair = activeDraw.pairs.find(p => p.giverId === participant.id);
+    if (myPair) {
+      try {
+        const transporter = createTransporter(config.emailSettings);
+        const receiverObj = {
+          name: myPair.receiverName,
+          wishlist: myPair.receiverWishlist
+        };
+        const htmlContent = buildEmailHtml(participant, receiverObj, config);
+        
+        // Envio assíncrono em segundo plano
+        transporter.sendMail({
+          from: `"${config.emailSettings.fromName || 'Amigo Secreto'}" <${config.emailSettings.user}>`,
+          to: participant.email,
+          subject: `🎅 [${participant.name}] Seu Amigo Secreto: ${config.eventName}`,
+          html: htmlContent
+        }).catch(err => console.error(`Erro ao disparar e-mail pós-sorteio para ${participant.email}:`, err.message));
+
+        emailDispatched = true;
+      } catch (err) {
+        console.error('Erro ao preparar envio pós-sorteio:', err.message);
+      }
+    }
+  }
+
+  const successMessage = emailDispatched
+    ? `E-mail cadastrado com sucesso! Como o sorteio já foi realizado, o seu amigo secreto acabou de ser enviado para ${participant.email}!`
+    : `E-mail e senha de 4 dígitos cadastrados com sucesso para ${participant.name}!`;
+
   res.json({
     success: true,
-    message: `E-mail e senha de 4 dígitos cadastrados com sucesso para ${participant.name}!`,
+    message: successMessage,
     participant: {
       id: participant.id,
       name: participant.name,
