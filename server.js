@@ -372,7 +372,8 @@ app.get('/api/config', (req, res) => {
     provider: config.emailSettings?.provider || 'gmail',
     fromName: config.emailSettings?.fromName || 'Amigo Secreto 🎅',
     drawCompleted: Boolean(activeDraw),
-    activeDrawDate: activeDraw ? activeDraw.date : null
+    activeDrawDate: activeDraw ? activeDraw.date : null,
+    hasEmailConfigured: Boolean(config.emailSettings && config.emailSettings.user && config.emailSettings.pass)
   });
 });
 
@@ -820,12 +821,17 @@ app.post('/api/draw', async (req, res) => {
   let transporter = null;
 
   if (!isSimulation) {
+    if (!config.emailSettings || !config.emailSettings.user || !config.emailSettings.pass) {
+      return res.status(400).json({
+        error: 'Você selecionou envio real por e-mail, mas a senha de e-mail (Senha de App do Google) não foi preenchida na Aba 1 de Configurações. Preencha sua senha de 16 letras ou marque "Apenas simular sorteio" abaixo.'
+      });
+    }
     try {
       transporter = createTransporter(config.emailSettings);
       await transporter.verify();
     } catch (err) {
       return res.status(500).json({
-        error: `Não foi possível conectar ao servidor de e-mail: ${err.message}. Verifique suas configurações de e-mail.`
+        error: `Não foi possível conectar ao servidor de e-mail: ${err.message}. Verifique sua Senha de App do Google na Aba 1 de Configurações.`
       });
     }
   }

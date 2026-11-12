@@ -175,8 +175,9 @@ function renderParticipantsGrid() {
   });
 
   let filtered = participants.filter(p => {
-    if (currentFilter === 'pending' && p.claimed) return false;
-    if (currentFilter === 'claimed' && !p.claimed) return false;
+    const isReg = hasRegisteredEmail(p);
+    if (currentFilter === 'pending' && isReg) return false;
+    if (currentFilter === 'claimed' && !isReg) return false;
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
       const matchName = p.name.toLowerCase().includes(q);
@@ -880,7 +881,7 @@ async function cancelActiveDraw() {
 // 16. Executar Sorteio
 async function handleExecuteDraw() {
   const isDryRun = document.getElementById('dryRunCheckbox').checked;
-  const unclaimedCount = participants.filter(p => !p.claimed).length;
+  const unclaimedCount = participants.filter(p => !hasRegisteredEmail(p)).length;
 
   let warning = '';
   if (unclaimedCount > 0) {
